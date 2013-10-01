@@ -38,6 +38,7 @@ db.sequelize.sync().complete(function(err) {
 		});
 		io.sockets.on('connection', function (socket) {
 		  socket.on('newPeer', function (data) {
+		  	console.log("New peer recently connected:");
 		    console.log(data);
 		  });
 		});
