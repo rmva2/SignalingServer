@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<link href="/stylesheets/bootstrap.min.css" rel="stylesheet" media="screen">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="/javascripts/bootstrap.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <body>
+  	<div class="container">
+  		<div class="span12">
+  			<h1><%= title %></h1>
+		    <legend>Log de la consola:</legend>
+		    <p class="console well">No implementado.</p>
+  		</div>
+  	</div>
+  </body>
+	<script>
+	  var socket = io.connect('http://localhost');
+	  socket.emit('newPeer', {
+	  	Usuario: "Gonzalo",
+	  	PassHash: "js6sh3vd76hd37db73c83c873c"
+	  });
+	  $(".console").text("Emitido nuevo peer.");
+	</script>
+</html>
