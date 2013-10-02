@@ -28,6 +28,8 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.get('/signin', routes.signin);
+app.get('/createAccount', routes.createAccount);
 
 db.sequelize.sync().complete(function(err) {
   if (err) 
@@ -38,11 +40,8 @@ db.sequelize.sync().complete(function(err) {
 
 	//Setup events:
 	io.sockets.on('connection', function (socket) {
-		console.log("Connection: New peer conected.");
-
 		socket.on('test', function () {
 			console.log("Received test event.");
 		});
-
 	});
-})
+});
