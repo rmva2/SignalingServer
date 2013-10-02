@@ -30,17 +30,19 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 
 db.sequelize.sync().complete(function(err) {
-  if (err) {
-    throw err
-  } else {
-    server.listen(app.get('port'), function(){
-		  console.log('Express server listening on port ' + app.get('port'));
+  if (err) 
+    throw err;
+  server.listen(app.get('port'), function(){
+	  console.log('Express server listening on port ' + app.get('port'));
+	});
+
+	//Setup events:
+	io.sockets.on('connection', function (socket) {
+		console.log("Connection: New peer conected.");
+
+		socket.on('test', function () {
+			console.log("Received test event.");
 		});
-		io.sockets.on('connection', function (socket) {
-		  socket.on('newPeer', function (data) {
-		  	console.log("New peer recently connected:");
-		    console.log(data);
-		  });
-		});
-  }
+
+	});
 })

@@ -18,10 +18,6 @@
   </body>
 	<script>
 	  var socket = io.connect('http://localhost');
-	  socket.emit('newPeer', {
-	  	Usuario: "Gonzalo",
-	  	PassHash: "js6sh3vd76hd37db73c83c873c"
-	  });
-	  $(".console").text("Emitido nuevo peer.");
+	  socket.emit('test');
 	</script>
 </html>
