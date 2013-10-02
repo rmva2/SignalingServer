@@ -30,6 +30,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/signin', routes.signin);
 app.get('/createAccount', routes.createAccount);
+app.get('/dialer', routes.dialer);
 
 db.sequelize.sync().complete(function(err) {
   if (err) 
