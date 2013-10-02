@@ -15,7 +15,7 @@
   			<div class="span12 text-center">
 					<legend><h3>Call your friends</h3></legend>
 					<p>E-mail you want to call:</p>
-					<input type="text" placeholder="user@host.com">
+					<input class="to" type="text" placeholder="user@host.com">
 					<button class="btn btn-large btn-success">Call</button>
 					<button class="btn btn-large btn-danger">Hang up</button>
 					<hr>
@@ -26,6 +26,27 @@
   </body>
 	<script>
 	  var socket = io.connect('http://localhost');
-	  socket.emit('test');
+	  var from = (new Date()).getMilliseconds()+"@peer.com";
+	  var to = $('.to').text();
+
+	  //Register in the server
+	  var TIME_REGISTER_IVAL = 2000;
+	  var amIRegistered = false;
+	  var registerInterval = setInterval(function(){
+	  	if(amIRegistered==true){
+	  		clearInterval(registerInterval);
+	  		console.log("...registration succesfull.");
+	  		return;
+	  	}
+	  	console.log("Registering...");
+	  	socket.emit('register', {email: from}); // try to register.
+	  }, TIME_REGISTER_IVAL);
+  	socket.on('status', function (data) {
+  		if(data.event == "register" && data.status == "200 OK")
+				amIRegistered = true;
+		});
+	  
+	  //Make a call (invite) 
+	  socket.emit('invite', {to: "to@peer.com"});
 	</script>
 </html>

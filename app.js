@@ -41,8 +41,24 @@ db.sequelize.sync().complete(function(err) {
 
 	//Setup events:
 	io.sockets.on('connection', function (socket) {
-		socket.on('test', function () {
-			console.log("Received test event.");
+		socket.on('register', function (data) {
+			//Register new peer email
+			var peer = io.sockets.sockets[socket.id];
+			peer.email = data.email;
+			console.log("Registered new peer:",peer.email);
+			//Send ACK response
+			socket.emit('status', {
+				event: "register",
+				status: "200 OK"
+			});
 		});
+
+		socket.on('invite', function (data) {
+			//TODO look up in peers who's data.peer
+			
+			//TODO resend invite event to that peer (chan)
+			THATsocket.emit('invite', {from: data.to});
+		});
+
 	});
 });
